@@ -1,22 +1,107 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>Science Watch - Home</title>
+
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-		
+		<style type="text/css">
+			.dropdown-menu { 
+				min-width: 250px;
+			}
+			.form-control {
+				margin-bottom: 5px;
+			}
+		</style>
+
 	</head>
 
 	<body>
+		<!-- Top nav bar -->
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+      			<div class="navbar-header">
+	            	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            		<span class="sr-only">Toggle navigation</span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	          		</button>
+	          		<a class="navbar-brand" href="#">Science Watch</a>
+        		</div>
+
+        		<div class="navbar-collapse collapse">
+		          <ul class="nav navbar-nav">
+		            <li class="active"><a href="#">Home</a></li>
+		            <li><a href="#about">About this Project</a></li>
+		            <li class="dropdown">
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories<b class="caret"></b></a>
+		              <ul class="dropdown-menu">
+		                <li><a href="#">Neuroscience</a></li>
+		                <li class="divider"></li>
+		                <li><a href="#">Computer Science</a></li>
+		                <li class="divider"></li>
+		                <li><a href="#">Systems</a></li>
+		                <!-- <li class="dropdown-header">Nav header</li> -->
+		              </ul>
+		            </li>
+		          </ul>
+		          <ul class="nav navbar-nav navbar-right">
+        			  <li class="dropdown">
+        			  	<a class="dropdown-toggle" data-toggle="dropdown">Register</a>
+        			  	<div class="dropdown-menu" style="padding: 10px">
+              				<!-- Login form here -->
+              				<form name="register" class="form-signin" method="post" role="form">
+		           				<input type="text" name="user" class="form-control" placeholder="Username">
+		            			<input type="email" name="email" class="form-control" placeholder="Email">
+		            			<input type="password" name="pwd" class="form-control" placeholder="Password">
+		            			<input class="btn btn-sm btn-info" type="submit" value="Register" style="width: 100%; margin-bottom: 5px">
+		            		</form>
+		            		<div class="alert alert-warning">
+						        <strong>Warning!</strong> Don't use your normal password: this is just a test website and potentially not secure!! Use something short and easy to remember
+						    </div>
+            			</div>
+        			  </li>
+        			  <!-- The sign in form -->
+			          <li class="dropdown">
+            			<a class="dropdown-toggle" data-toggle="dropdown">Log In</a>
+            			<div class="dropdown-menu" style="padding: 10px">
+              				<!-- Login form here -->
+              				<form name="login" class="form-signin" method="post" role="form">
+		           				<input type="text" name="user" class="form-control" placeholder="Username">
+		            			<input type="password" name="pwd" class="form-control" placeholder="Password">
+		            			<input class="btn btn-sm btn-info" type="submit" value="Sign In" style="width: 100%">
+		            		</form>
+            			</div>
+          			</li>
+          			<li><a href="#">Log Out</a></li>
+        		  </ul>
+		          
+		        </div>
+        	</div>
+		</div>
+
+		<!-- The start of the actual body -->
+		<div class="container" role="main">
+			<br>
 		
 
+			<!-- <div class="page-header">
+				<h1>Today on Science Watch</h1>
+			</div> -->
 
+
+		</div>
+		
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	</body>
 
 </html>
