@@ -8,22 +8,72 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <title>Science Watch - Home</title>
 
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
 		<style type="text/css">
+			body {
+				background-color: rgb(50,50,50);
+			}
 			.dropdown-menu { 
 				min-width: 250px;
 			}
 			.form-control {
 				margin-bottom: 5px;
 			}
+			.article-link {
+				  position:absolute; 
+/*				  min-width:90%;
+*/				  width: 90%;
+				  height:225px;
+				  top:0;
+				  left: 0;
+				  /* edit: added z-index */
+				  z-index: 1;
+				  background: rgb(240,240,240);
+				  border-radius: 10px;
+				  padding: 10px;
+			}
+
+			a {
+				color: rgb(100,100,100);
+			}
+
+			a:hover {
+				color: rgb(20,150,20);
+			}
+
+			.article-icon {
+				width:50%; 
+				margin: auto; 
+				display: block;
+			}
+
+
+
+			.discuss {
+				float: left;
+				text-align: left;
+				padding: 10px;
+			}
+
+			.favorite {
+				text-align: right;
+				padding: 10px;
+			}
+
+			.title {
+				text-align: center;
+
+			}
+
+
 		</style>
 
 	</head>
 
 	<body>
 		<!-- Top nav bar -->
-		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
       			<div class="navbar-header">
 	            	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -52,24 +102,13 @@
 		            </li>
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
-        			  <li class="dropdown">
-        			  	<a class="dropdown-toggle" data-toggle="dropdown">Register</a>
-        			  	<div class="dropdown-menu" style="padding: 10px">
-              				<!-- Login form here -->
-              				<form name="register" class="form-signin" method="post" role="form">
-		           				<input type="text" name="user" class="form-control" placeholder="Username">
-		            			<input type="email" name="email" class="form-control" placeholder="Email">
-		            			<input type="password" name="pwd" class="form-control" placeholder="Password">
-		            			<input class="btn btn-sm btn-info" type="submit" value="Register" style="width: 100%; margin-bottom: 5px">
-		            		</form>
-		            		<div class="alert alert-warning">
-						        <strong>Warning!</strong> Don't use your normal password: this is just a test website and potentially not secure!! Use something short and easy to remember
-						    </div>
-            			</div>
+        			  <li>
+        			  	<a href="/register">Register</a>
+
         			  </li>
         			  <!-- The sign in form -->
 			          <li class="dropdown">
-            			<a class="dropdown-toggle" data-toggle="dropdown">Log In</a>
+            			<a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In</a>
             			<div class="dropdown-menu" style="padding: 10px">
               				<!-- Login form here -->
               				<form name="login" class="form-signin" method="post" role="form">
@@ -79,17 +118,74 @@
 		            		</form>
             			</div>
           			</li>
-          			<li><a href="#">Log Out</a></li>
+          			<li><a href="/logout">Log Out</a></li>
         		  </ul>
 		          
 		        </div>
         	</div>
 		</div>
 
+
 		<!-- The start of the actual body -->
 		<div class="container" role="main">
-			<br>
-		
+			<div class="row">
+				<div class="col-md-3" >
+					<a href="http://journal.frontiersin.org/Journal/10.3389/fnsys.2014.00040/full">
+						<span class="article-link">
+							<img src="/static/article.png" class="article-icon">
+							<div class="title">The effects of disrupting half a brain</div>
+							<div class="discuss">
+								Comment
+							</div>
+							<div class="favorite">
+								Favorite
+							</div>
+						</span>
+					</a>
+				</div>
+				<div class="col-md-3" >
+					<a href="http://journal.frontiersin.org/Journal/10.3389/fnsys.2014.00027/full">
+						<span class="article-link">
+						<img src="/static/article.png" class="article-icon">
+							<div class="title">Dynamics of cortex</div>
+							<div class="discuss">
+								Comment
+							</div>
+							<div class="favorite">
+								Favorite
+							</div>
+						</span>
+					</a>
+				</div>
+				<div class="col-md-3" >
+					<a href="http://www.nature.com/news/neuroscience-tuning-the-brain-1.14900">
+						<span class="article-link">
+						<img src="/static/article.png" class="article-icon">
+							<div class="title">Tuning the brain</div>
+							<div class="discuss">
+								Comment
+							</div>
+							<div class="favorite">
+								Favorite
+							</div>
+						</span>
+					</a>
+				</div>
+				<div class="col-md-3" >
+					<a href="http://www.nature.com/nature/journal/v507/n7492/full/nature13078.html">
+						<span class="article-link">
+						<img src="/static/article.png" class="article-icon">
+							<div class="title">Next generation radar systems</div>
+							<div class="discuss">
+								Comment
+							</div>
+							<div class="favorite">
+								Favorite
+							</div>
+						</span>
+					</a>
+				</div>
+			</div>
 
 			<!-- <div class="page-header">
 				<h1>Today on Science Watch</h1>
@@ -99,9 +195,9 @@
 		</div>
 		
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="/static/js/jquery-1.11.0.min.js"></script>
 
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="/static/js/bootstrap.min.js"></script>
 	</body>
 
 </html>

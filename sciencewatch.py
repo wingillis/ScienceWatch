@@ -4,25 +4,33 @@ import secretKey, psycopg2
 app = Flask(__name__) 
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
-	return render_template('index.html')
-
-@app.route('/login', methods=['GET','POST'])
-def login():
 	if request.method == 'POST':
-		user = request.form['user']
-		pwd = request.form['pwd']
-		session['username'] = user
-		return redirect(url_for('index'))
+		print(request.form['pwd'])
+		# user = request.form['user']
+		# pwd = request.form['pwd']
+		# session['username'] = user
+		return render_template('index.html')
+
 	else:
-		return render_template('login.html')
+		return render_template('index.html')
+
 
 @app.route('/logout')
 def logout():
 	session.pop('username', None)
-	return ''
+	return redirect(url_for('index'))
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+	if request.method == 'POST':
+		# Give user an account, add them to database
+		# redirect to home screen
+		return redirect(url_for('index'))
+	else:
+		# render login form
+		return render_template('register.html')
 
 if __name__=="__main__":
 	app.secret_key = secretKey.key
