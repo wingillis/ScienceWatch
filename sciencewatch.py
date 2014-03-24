@@ -146,6 +146,6 @@ class Comment:
 
 
 if __name__=="__main__":
-	app.secret_key = secretKey.key
+	app.secret_key = 'hihi675r76fytfy5dt4etdcvbnm09u74s57vc5s64s6v87bv'
 	app.run()
 
