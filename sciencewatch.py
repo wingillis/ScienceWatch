@@ -39,7 +39,7 @@ def index():
 		for i in range(3):
 			rows.append([])
 			for j in range(4):	
-				rows[i].append(Entry(content[i*j+j]))
+				rows[i].append(Entry(content[i*4+j]))
 		t = False
 		info = ''
 		if 'uuid' in session:
