@@ -3,6 +3,7 @@ import secretKey, time, random, string
 from dbStruct import DbStruct
 
 app = Flask(__name__) 
+app.secret_key = 'hihi675r76fytfy5dt4etdcvbnm09u74s57vc5s64s6v87bv'
 
 database = DbStruct()
 
@@ -146,6 +147,5 @@ class Comment:
 
 
 if __name__=="__main__":
-	app.secret_key = 'hihi675r76fytfy5dt4etdcvbnm09u74s57vc5s64s6v87bv'
 	app.run()
 
