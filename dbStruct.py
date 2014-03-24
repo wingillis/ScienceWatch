@@ -18,7 +18,7 @@ class DbStruct:
 		    	port=url.port)
 
 			# If that doesn't work, on local database, use:
-			#self.connection = psycopg2.connect('dbname=sciencewatch user=wgillis')
+			# self.connection = psycopg2.connect('dbname=sciencewatch user=wgillis')
 
 			self.cursor = self.connection.cursor()
 
@@ -94,5 +94,19 @@ class DbStruct:
 		arts = self.getall()
 		return arts
 
+	def addComment(self, args):
 
+		try:
+			self.execute('insert into comments (commenturl, comment, username, time) values (%s,%s,%s,%s)', args)
+			self.save()
+
+
+			return True
+		except Exception as e:
+			return False
+
+	def getComments(self, url):
+
+		self.execute('select comment, username from comments where commenturl=%s order by time desc', (url,))
+		return self.getall()
 

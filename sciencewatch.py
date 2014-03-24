@@ -80,6 +80,34 @@ def postArticle():
 			u = database.getUsername(session['uuid'])
 		return render_template('postArticle.html', signedIn=signedIn, uname=u)
 
+@app.route('/<commenturl>', methods=['GET','POST'])
+def comment(commenturl):
+	if request.method == 'POST':
+		if 'user' in request.form:
+			user = signIn(request)
+			return redirect('/%s' % (commenturl))
+		elif 'comment' in request.form:
+			u = database.getUsername(session['uuid'])
+			com = request.form['comment']
+			t= time.time()
+			database.addComment((commenturl, com, u, t))
+			return redirect('/%s' % (commenturl))
+	else:
+		database.execute('select articleurl, comments, title from articles where comments=%s', (commenturl,))
+		data = database.getOne()
+		if data:
+			title = data[2]
+			articleurl = data[0]
+			signedIn = False
+			name = ''
+			comms = database.getComments(commenturl)
+			struct = [Comment(com[1],com[0]) for com in comms]
+			if 'uuid' in session:
+				signedIn = True
+				name = database.getUsername(session['uuid'])
+			return render_template('comments.html', title=title, url=articleurl, uname=name, signedIn=signedIn, comments=struct)
+		else:
+			return 'Does not exist'
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -107,7 +135,11 @@ class Entry:
 		self.title = args[2]
 		self.commentURL = args[1]
 
-		
+
+class Comment:
+	def __init__(self, u,t):
+		self.user = u
+		self.text = t
 
 
 if __name__=="__main__":

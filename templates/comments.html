@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+	    <style type="text/css">
+
+			.dropdown-menu { 
+				min-width: 250px;
+			}
+
+			.form-control {
+				margin-bottom: 5px;
+			}
+			.form-signin {
+				margin: 10px;
+			}
+
+			a {
+				color: rgb(100,100,100);
+				text-decoration: none;
+			}
+
+			a:hover {
+				text-decoration: none;
+				color: black;
+			}
+
+			#form {
+				margin-bottom: 10px;
+			}
+
+	    </style>
+
+	</head>
+
+	<body>
+		<!-- The menu bar at the top -->
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+      			<div class="navbar-header">
+	            	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            		<span class="sr-only">Toggle navigation</span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	          		</button>
+	          		<a class="navbar-brand" href="#">Science Watch</a>
+        		</div>
+
+        		<div class="navbar-collapse collapse">
+		          <ul class="nav navbar-nav">
+		            <li><a href="/">Home</a></li>
+		            <li><a href="#">About this Project</a></li>
+		            <li class="dropdown">
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories<b class="caret"></b></a>
+		              <ul class="dropdown-menu">
+		                <li><a href="#">Neuroscience</a></li>
+		                <li class="divider"></li>
+		                <li><a href="#">Computer Science</a></li>
+		                <li class="divider"></li>
+		                <li><a href="#">Systems</a></li>
+		                <!-- <li class="dropdown-header">Nav header</li> -->
+		              </ul>
+		            </li>
+		            {%if signedIn %}
+		            <li><a>Hello, {{uname}}</a></li>
+		            {% endif %}
+		          </ul>
+		          <ul class="nav navbar-nav navbar-right">
+        			  <li>
+        			  	<a href="/register">Register</a>
+
+        			  </li>
+        			  <!-- The sign in form -->
+			          <li class="dropdown">
+            			<a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In</a>
+            			<div class="dropdown-menu" style="padding: 10px">
+              				<!-- Login form here -->
+              				<form name="login" class="form-signin" method="post" role="form">
+		           				<input type="text" name="user" class="form-control" placeholder="Username">
+		            			<input type="password" name="pwd" class="form-control" placeholder="Password">
+		            			<input class="btn btn-sm btn-info" type="submit" value="Sign In" style="width: 100%">
+		            		</form>
+            			</div>
+          			</li>
+          			<li><a href="/logout">Log Out</a></li>
+        		  </ul>
+		          
+		        </div>
+        	</div>
+		</div>
+
+		<div class="container">
+			<div class="page-header">
+				<a href="{{url}}"><h1>{{title}}</h1></a>
+				
+			</div>
+			{% if signedIn %}
+			<form id="form" name="comment" method="post">
+					<textarea class="form-control" rows="3" name="comment"></textarea>
+					<input class="btn btn-success" type="submit" value="Submit Comment">
+			</form>
+			{% else %}
+			<h3>Please sign in to comment</h3>
+			{% endif %}
+			<div class="panel panel-default">
+
+			{% for comment in comments %}
+
+				<div class="panel-heading">
+				    <h3 class="panel-title">{{comment.user}}</h3>
+				  </div>
+				  <div class="panel-body">
+				    {{comment.text}}
+				  </div>
+			{% endfor %}
+			  </div>
+
+		</div>
+
+		<script src="/static/js/jquery-1.11.0.min.js"></script>
+
+		<script src="/static/js/bootstrap.min.js"></script>
+	</body>
+
+</html>
