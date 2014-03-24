@@ -1,74 +1,36 @@
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html>
 	<head>
+		<title>Post Article</title>
 		<meta charset="utf-8">
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>Science Watch - Home</title>
 
-		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
-		<link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-
-		<style type="text/css">
+	    <style type="text/css">
 
 			.dropdown-menu { 
 				min-width: 250px;
 			}
+
 			.form-control {
+				width: 50%;
 				margin-bottom: 5px;
 			}
-
-			.a {
-				color: rgb(100,100,100);
+			.form-signin {
+				margin: 10px;
 			}
 
-
-			.article-icon {
-				width:50%; 
-				margin: auto; 
-				display: block;
-			}
-
-			.title {
-				text-align: center;
-
-			}
-
-			#post {
-				margin-bottom: 10px;
-				width: 100%;
-			}
-
-			.bg {
-				background-color: rgb(240,240,240);
-				border-radius: 10px;
-				border: 4px solid white;
-				}
-
-			.comment {
-				margin-bottom: 10px;
-				margin-top: 5px;
-				width: 100%;
-				background-color: black;
-				border: 1px solid black;
-			}
-
-			.comment:hover {
-				background-color: rgb(50,50,50);
-				border: 1px solid rgb(50,50,50);
-			}
-
-
-		</style>
+	    </style>
 
 	</head>
 
 	<body>
-		<!-- Top nav bar -->
-		<!-- TODO add code to preferentially display someone's username at the top -->
+		<!-- The menu bar at the top -->
 		<div class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
       			<div class="navbar-header">
@@ -83,7 +45,7 @@
 
         		<div class="navbar-collapse collapse">
 		          <ul class="nav navbar-nav">
-		            <li class="active"><a href="#">Home</a></li>
+		            <li><a href="/">Home</a></li>
 		            <li><a href="#">About this Project</a></li>
 		            <li class="dropdown">
 		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories<b class="caret"></b></a>
@@ -96,7 +58,7 @@
 		                <!-- <li class="dropdown-header">Nav header</li> -->
 		              </ul>
 		            </li>
-		            {%if user == True%}
+		            {%if signedIn %}
 		            <li><a>Hello, {{uname}}</a></li>
 		            {% endif %}
 		          </ul>
@@ -124,31 +86,20 @@
         	</div>
 		</div>
 
+		{% if signedIn %}
 
-		<!-- The start of the actual body -->
-		<div class="container" role="main">
-		<!-- Where the user can press to post an article -->
-			<div class="row">
-				<a href="/postArticle" class="btn btn-lg btn-success" id="post">Post an article</a>
-			</div>
+		<form name="article" class="form-signin" method="post" role="form">
+			<h3>Put the  title and link to the article here (preferably a link to the full article): </h3><br>
+			<input type="text" name="title" class="form-control" placeholder="title: limit 50 characters" maxlength="50" required>
+			<input type="text" name="artUrl" class="form-control" placeholder="url" required>
+			<input type="submit" class="btn btn-success" value="Post article">
+		</form>
 
-			{% for row in rows %}
-				<div class="row">
-					{% for column in row %}
-						<div class="col-md-3 bg">
-							<a href="{{column.articleURL}}">
-								<img src="/static/article.png" class="article-icon">
-								<div class="title">{{column.title}}</div>
-							</a>
-							<a href="/{{column.commentURL}}" class="btn comment">Comment</a>
-						</div>
-					{% endfor %}
-				</div>
-			{% endfor %}
+		{% else %}
 
+		<h1>Please sign in to post an article</h1>
 
-		</div>
-		
+		{% endif %}
 
 		<script src="/static/js/jquery-1.11.0.min.js"></script>
 
