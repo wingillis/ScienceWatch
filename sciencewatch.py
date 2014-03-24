@@ -84,8 +84,11 @@ def postArticle():
 def comment(commenturl):
 	if request.method == 'POST':
 		if 'user' in request.form:
-			user = signIn(request)
-			return redirect('/%s' % (commenturl))
+			try:
+				user = signIn(request)
+				return redirect('/%s' % (commenturl))
+			except Exception as e:
+				return str(e)
 		elif 'comment' in request.form:
 			u = database.getUsername(session['uuid'])
 			com = request.form['comment']
