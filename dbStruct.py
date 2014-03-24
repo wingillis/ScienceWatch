@@ -7,18 +7,18 @@ class DbStruct:
 
 	def __init__(self):
 
-		# urlparse.uses_netloc.append("postgres")
-		# url = urlparse.urlparse(os.environ["DATABASE_URL"])
+		urlparse.uses_netloc.append("postgres")
+		url = urlparse.urlparse(os.environ["DATABASE_URL"])
 		try:
-			# self.connection = psycopg2.connect(
-			#     database=url.path[1:],
-			#     user=url.username,
-		 #    	password=url.password,
-		 #    	host=url.hostname,
-		 #    	port=url.port)
+			self.connection = psycopg2.connect(
+			    database=url.path[1:],
+			    user=url.username,
+		    	password=url.password,
+		    	host=url.hostname,
+		    	port=url.port)
 
 			# If that doesn't work, on local database, use:
-			self.connection = psycopg2.connect('dbname=sciencewatch user=wgillis')
+			#self.connection = psycopg2.connect('dbname=sciencewatch user=wgillis')
 
 			self.cursor = self.connection.cursor()
 
