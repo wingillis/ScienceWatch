@@ -49,12 +49,17 @@ def index(number=0):
 		content = content[accessContent:accessContent+12]
 		rows = []
 		k = len(content)
-
+		data = [(content[i],content[i+1] if i+1<k else '') for i in range(0,k,2)]
+		# for i in range(3):
+		# 	rows.append([])
+		# 	for j in range(4):
+		# 		if (i*4+j) < k:	
+		# 			rows[i].append(Entry(content[i*4+j]))
 		for i in range(3):
 			rows.append([])
-			for j in range(4):
-				if (i*4+j) < k:	
-					rows[i].append(Entry(content[i*4+j]))
+			for j in range(2):
+				if(i*2+j)< k:
+					rows[i].append((Entry(data[i*2+j][0]),Entry(data[i*2+j][1])))
 		t = False
 		info = ''
 		if 'uuid' in session:
@@ -161,5 +166,5 @@ class Comment:
 
 
 if __name__=="__main__":
-	app.run()
+	app.run(debug=True)
 

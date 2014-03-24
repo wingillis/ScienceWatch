@@ -14,6 +14,19 @@
 
 		<style type="text/css">
 
+		.pagination a:hover {
+			background-color: #000000;
+		}
+		.pagination .active a {
+			background-color: #000000;
+			border: 1px solid black;
+		}
+
+		.pagination .active a:hover {
+			background-color: #333333;
+			border: 1px solid black;
+		}
+
 			.dropdown-menu { 
 				min-width: 250px;
 			}
@@ -40,12 +53,20 @@
 			#post {
 				margin-bottom: 10px;
 				width: 100%;
+				border: 4px solid white;
+				background-color: rgb(150,150,170);
+			}
+
+			#post:hover {
+				background-color: rgb(135,135,155);
+
 			}
 
 			.bg {
 				background-color: rgb(240,240,240);
 				border-radius: 10px;
 				border: 4px solid white;
+				height: 100%;
 				}
 
 			.comment {
@@ -79,6 +100,9 @@
 
 			}
 
+			#pages {
+				background-color: black;
+			}
 
 		</style>
 
@@ -156,17 +180,26 @@
 			</div>
 
 			{% for row in rows %}
-				<div class="row">
-					{% for column in row %}
-						<div class="col-md-3 col-xs-6 bg">
-							<a href="{{column.articleURL}}" class="nounder">
-								<img src="/static/article.png" class="article-icon">
-								<div class="title">{{column.title}}</div>
-							</a>
-							<a href="/{{column.commentURL}}" class="btn comment">Comment</a>
-						</div>
-					{% endfor %}
+			<div class="row">
+				{% for column in row %}
+				<div class="col-md-6">
+					<div class="col-md-6 col-xs-6 bg">
+						<a href="{{column[0].articleURL}}" class="nounder">
+							<img src="/static/article.png" class="article-icon">
+							<div class="title">{{column[0].title}}</div>
+						</a>
+						<a href="/{{column[0].commentURL}}" class="btn comment">Comment</a>
+					</div>
+					<div class="col-md-6 col-xs-6 bg">
+						<a href="{{column[1].articleURL}}" class="nounder">
+							<img src="/static/article.png" class="article-icon">
+							<div class="title">{{column[1].title}}</div>
+						</a>
+						<a href="/{{column[1].commentURL}}" class="btn comment">Comment</a>
+					</div>
 				</div>
+				{% endfor %}
+			</div>
 			{% endfor %}
 
 
