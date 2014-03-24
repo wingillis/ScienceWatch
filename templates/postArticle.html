@@ -18,7 +18,6 @@
 			}
 
 			.form-control {
-				width: 50%;
 				margin-bottom: 5px;
 			}
 			.form-signin {
@@ -87,14 +86,18 @@
 		</div>
 
 		{% if signedIn %}
-
-		<form name="article" class="form-signin" method="post" role="form">
-			<h3>Put the  title and link to the article here (preferably a link to the full article): </h3><br>
-			<input type="text" name="title" class="form-control" placeholder="title: limit 50 characters" maxlength="50" required>
-			<input type="text" name="artUrl" class="form-control" placeholder="url" required>
-			<input type="submit" class="btn btn-success" value="Post article">
-		</form>
-
+		<div class="container">
+			<div class="row">
+			<div class="col-md-6">
+			<form name="article" class="form-signin" method="post" role="form">
+				<h3>Put the  title and link to the article here (preferably a link to the full article): </h3><br>
+				<input type="text" name="title" class="form-control" placeholder="title: limit 50 characters" maxlength="50" required>
+				<input type="text" name="artUrl" class="form-control" placeholder="url" required>
+				<input type="submit" class="btn btn-success" value="Post article">
+			</form>
+			</div>
+			</div>
+		</div>
 		{% else %}
 
 		<h1>Please sign in to post an article</h1>
