@@ -3,7 +3,7 @@ import secretKey, time, random, string
 from dbStruct import DbStruct
 
 app = Flask(__name__) 
-app.secret_key = 'hihi675r76fytfy5dt4etdcvbnm09u74s57vc5s64s6v87bv'
+app.secret_key = secretKey.key
 
 database = DbStruct()
 
@@ -85,11 +85,10 @@ def postArticle():
 def comment(commenturl):
 	if request.method == 'POST':
 		if 'user' in request.form:
-			try:
-				user = signIn(request)
-				return redirect('/%s' % (commenturl))
-			except Exception as e:
-				return str(e)
+
+			user = signIn(request)
+			return redirect('/%s' % (commenturl))
+
 		elif 'comment' in request.form:
 			u = database.getUsername(session['uuid'])
 			com = request.form['comment']
