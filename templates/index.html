@@ -160,11 +160,34 @@
 
 
 		</div>
-		
+		<div class="container">
+
+			<ul id="pages">
+			
+			</ul>
+			
+		</div>
 
 		<script src="/static/js/jquery-1.11.0.min.js"></script>
 
 		<script src="/static/js/bootstrap.min.js"></script>
+
+		<script src="/static/js/bootstrap-paginator.min.js"></script>
+
+		<script type="text/javascript">
+			var options = {
+				currentPage: {{page}},
+				totalPages: {{totalPages}},
+				bootstrapMajorVersion: 3,
+				pageUrl: function(type, page, current){
+
+                return "/page/"+page;
+
+            	}
+			}
+
+			$('#pages').bootstrapPaginator(options);
+		</script>
 	</body>
 
 </html>

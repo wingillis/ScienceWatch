@@ -88,9 +88,9 @@ class DbStruct:
 
 			return False
 
-	def getFirst12Articles(self):
+	def getArticles(self):
 		'''return a list of first ten articles'''
-		self.execute('select articleurl, comments, title from articles order by posttime desc limit 12')
+		self.execute('select articleurl, comments, title from articles order by posttime desc')
 		arts = self.getall()
 		return arts
 

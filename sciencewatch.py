@@ -1,5 +1,5 @@
 from flask import Flask, render_template, session, request, redirect, url_for
-import secretKey, time, random, string
+import secretKey, time, random, string, math
 from dbStruct import DbStruct
 
 app = Flask(__name__) 
@@ -26,15 +26,21 @@ def signIn(r):
 
 
 # Add functionality to being already logged in
+@app.route('/page/<number>', methods=['GET','POST'])
 @app.route('/', methods=['GET','POST'])
-def index():
+def index(number=0):
 	if request.method == 'POST':	
 		user = signIn(request)
-		
-		return redirect('/')
+		if number:
+			return redirect('/page/%s' % number)
+		else:
+			return redirect('/')
 
 	else:
-		content = database.getFirst12Articles()
+		content = database.getArticles()
+		totalContent = len(content)
+		maxPages = math.ceil(totalContent/12)
+		content = content[number:number+12]
 		rows = []
 		for i in range(3):
 			rows.append([])
@@ -48,7 +54,7 @@ def index():
 			
 			t = True
 			info = database.getUsername(session['uuid'])
-		return render_template('index.html', user=t, uname = info, rows=rows)
+		return render_template('index.html', user=t, uname = info, rows=rows, page=number+1,totalPages=maxPages)
 
 
 # Pretty much all taken care of
@@ -146,5 +152,5 @@ class Comment:
 
 
 if __name__=="__main__":
-	app.run()
+	app.run(debug=True)
 
