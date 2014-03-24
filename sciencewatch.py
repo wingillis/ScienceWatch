@@ -62,7 +62,7 @@ def postArticle():
 	if request.method == 'POST':
 		if 'user' in request.form:
 			user = signIn(request)
-			return redirect('/postArticle'))
+			return redirect('/postArticle')
 		elif 'artUrl' in request.form:
 			c = generateURL()
 			u = database.getUsername(session['uuid'])
