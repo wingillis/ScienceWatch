@@ -37,6 +37,11 @@
 			#form {
 				margin-bottom: 10px;
 			}
+			#login {
+				margin-bottom: 0px;
+				border: none;
+
+			}
 
 	    </style>
 
@@ -74,6 +79,11 @@
 		            {%if signedIn %}
 		            <li><a>Hello, {{uname}}</a></li>
 		            {% endif %}
+		            {% with messages = get_flashed_messages() %}
+					  {% if messages %}
+					      <li class="alert alert-danger" id="login">{{ messages[0] }}</li>
+					  {% endif %}
+					{% endwith %}
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
         			  <li>

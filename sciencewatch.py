@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, redirect, url_for
+from flask import Flask, render_template, session, flash, request, redirect, url_for
 import secretKey, time, random, string, math
 from dbStruct import DbStruct
 
@@ -14,20 +14,21 @@ def signIn(r):
 	user = r.form['user']
 	pwd = r.form['pwd']
 	login = database.checkLogIn(user, pwd)
-	if login != None:
+	if login:
 		session['uuid'] = login
 		return user
 	else:
 		# Username is not in database, so do something about it
 		# Form a response
+		flash('Invalid login')
 		return ''
 
-
-
+@app.route('/')
+def r():
+	return redirect('/page/1')
 
 # Add functionality to being already logged in
 @app.route('/page/<number>', methods=['GET','POST'])
-@app.route('/', methods=['GET','POST'])
 def index(number=0):
 	if request.method == 'POST':	
 		user = signIn(request)
@@ -40,12 +41,20 @@ def index(number=0):
 		content = database.getArticles()
 		totalContent = len(content)
 		maxPages = math.ceil(totalContent/12)
-		content = content[number:number+12]
+		if number:
+			num = int(number)
+			accessContent = (num-1) * 12
+		else:
+			accessContent = 0
+		content = content[accessContent:accessContent+12]
 		rows = []
+		k = len(content)
+
 		for i in range(3):
 			rows.append([])
-			for j in range(4):	
-				rows[i].append(Entry(content[i*4+j]))
+			for j in range(4):
+				if (i*4+j) < k:	
+					rows[i].append(Entry(content[i*4+j]))
 		t = False
 		info = ''
 		if 'uuid' in session:
@@ -54,14 +63,14 @@ def index(number=0):
 			
 			t = True
 			info = database.getUsername(session['uuid'])
-		return render_template('index.html', user=t, uname = info, rows=rows, page=number+1,totalPages=maxPages)
+		return render_template('index.html', user=t, uname = info, rows=rows, page=num,totalPages=maxPages)
 
 
 # Pretty much all taken care of
 @app.route('/logout')
 def logout():
 	session.pop('uuid', None)
-	return redirect(url_for('index'))
+	return redirect('/')
 
 
 @app.route('/postArticle', methods=['GET','POST'])
@@ -76,7 +85,7 @@ def postArticle():
 			args = (session['uuid'], u, request.form['artUrl'], time.time(), c, request.form['title'])
 			state = database.addArticle(args)
 			if state:
-				return redirect(url_for('index'))
+				return redirect('/')
 			else:
 				return '404'
 	else:
@@ -129,7 +138,7 @@ def register():
 			database.execute('select (id) from users where username=%s', (user,))	
 			uuid = database.getOne()[0]
 			session['uuid'] = uuid
-			return redirect(url_for('index'))
+			return redirect('/')
 		else:
 			# TODO:
 			# add error message
@@ -152,5 +161,5 @@ class Comment:
 
 
 if __name__=="__main__":
-	app.run(debug=True)
+	app.run()
 

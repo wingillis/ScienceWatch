@@ -73,6 +73,12 @@
 				text-decoration: none;
 			}
 
+			#login {
+				margin-bottom: 0px;
+				border: none;
+
+			}
+
 
 		</style>
 
@@ -111,6 +117,11 @@
 		            {% if user %}
 		            <li><a>Hello, {{uname}}</a></li>
 		            {% endif %}
+		            {% with messages = get_flashed_messages() %}
+					  {% if messages %}
+					      <li class="alert alert-danger" id="login">{{ messages[0] }}</li>
+					  {% endif %}
+					{% endwith %}
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
         			  <li>
@@ -159,13 +170,11 @@
 			{% endfor %}
 
 
+			
 		</div>
 		<div class="container">
-
 			<ul id="pages">
-			
-			</ul>
-			
+			</ul>	
 		</div>
 
 		<script src="/static/js/jquery-1.11.0.min.js"></script>
@@ -187,6 +196,12 @@
 			}
 
 			$('#pages').bootstrapPaginator(options);
+
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					alert('Invalid login');
+				{% endif %}
+			{% endwith %}
 		</script>
 	</body>
 

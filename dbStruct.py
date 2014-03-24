@@ -67,7 +67,7 @@ class DbStruct:
 		password, otherwise returns None'''
 		self.execute('select * from users where username = %s', (user,))
 		data = self.getOne()
-		if data[2] == pwd:
+		if data and data[2] == pwd:
 			return data[0]
 		else:
 			return None
