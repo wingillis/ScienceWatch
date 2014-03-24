@@ -30,7 +30,7 @@ def index():
 	if request.method == 'POST':	
 		user = signIn(request)
 		
-		return render_template('index.html', user=True, uname=user)
+		return redirect('/')
 
 	else:
 		content = database.getFirst12Articles()
@@ -62,7 +62,7 @@ def postArticle():
 	if request.method == 'POST':
 		if 'user' in request.form:
 			user = signIn(request)
-			return redirect(url_for('postArticle'))
+			return redirect('/postArticle'))
 		elif 'artUrl' in request.form:
 			c = generateURL()
 			u = database.getUsername(session['uuid'])
