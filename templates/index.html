@@ -190,6 +190,7 @@
 						</a>
 						<a href="/{{column[0].commentURL}}" class="btn comment">Comment</a>
 					</div>
+					{% if column[1] %}
 					<div class="col-md-6 col-xs-6 bg">
 						<a href="{{column[1].articleURL}}" class="nounder">
 							<img src="/static/article.png" class="article-icon">
@@ -197,6 +198,7 @@
 						</a>
 						<a href="/{{column[1].commentURL}}" class="btn comment">Comment</a>
 					</div>
+					{% endif %}
 				</div>
 				{% endfor %}
 			</div>
