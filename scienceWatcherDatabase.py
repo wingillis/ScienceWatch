@@ -17,8 +17,6 @@ class Database:
 		# self.connection = psycopg2.connect('dbname=sciencewatch\
 		# 	user=wgillis')
 
-		# self.cursor = self.connection.cursor()
-
 		# code for after development
 		urlparse.uses_netloc.append("postgres")
 		url = urlparse.urlparse(os.environ["DATABASE_URL"])
@@ -28,6 +26,8 @@ class Database:
 		    	password=url.password,
 		    	host=url.hostname,
 		    	port=url.port)
+		self.cursor = self.connection.cursor()
+
 
 	def save(self):
 
