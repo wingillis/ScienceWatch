@@ -1,0 +1,203 @@
+<!-- This structure signifies a special code used
+by the rendering engine jinja to use python code and variables
+within the html file -->
+{% extends "base.html" %}
+
+{% block style %}
+
+.pagination .active a {
+	background-color: #2b2b2b;
+	border: 1px solid rgb(60,60,60);
+}
+
+.pagination .active a:hover {
+	background-color: #2b2b2b;
+	border: 1px solid rgb(60,60,60);
+
+}
+
+.pagination li a {
+	color: #2b2b2b;
+	border: 1px solid rgb(60,60,60);
+	background-color: #BFAF80;
+}
+
+.pagination li a:hover {
+	color: white;
+	border: 1px solid rgb(60,60,60);
+	background-color: #2b2b2b;
+
+}
+
+.article-icon {
+	width:50%; 
+	margin: auto; 
+	display: block;
+}
+
+#post {
+	margin-bottom: 10px;
+	width: 100%;
+	border: 4px solid #2b2b2b;
+	background-color: #F2EEB3;
+	border-radius: 0px;
+	color: black;
+}
+
+#post:hover {
+	background-color: #FFFBD4;
+}
+
+.bg {
+	padding-top: 5px;
+	background-color: #8C6954;
+	border: 4px solid #2b2b2b;
+	border-radius: 20px;
+}
+
+.bg a.comment {
+	color: #8C6954;
+}
+
+
+.comment {
+	margin-bottom: 10px;
+	margin-top: 5px;
+	width: 100%;
+	background-color: black;
+	border: 1px solid black;
+	color: white;
+	border-radius: 10px;
+}
+
+.comment:hover {
+	background-color: rgb(51,51,51);
+	color: white;
+	border: 1px solid rgb(51,51,51);
+}
+
+.title {
+	text-align: center;
+	color: black;
+}
+
+.nounder {
+	text-decoration: none;
+}
+
+.nounder:hover {
+	text-decoration: none;
+}
+
+.a1 {
+	background-color: #BFAF80;
+}
+
+.a1 a.comment {
+	color: #BFAF80;
+}
+
+.a2 {
+	background-color: #F2EEB3;
+}
+
+.a2 a.comment {
+	color: #F2EEB3;
+}
+
+.a3 {
+	background-color: #260126;
+}
+
+.a3 a .article-icon {
+	-webkit-filter: invert(100%);
+}
+
+.a3 div.title {
+	color: white;
+}
+
+.a3 a.comment {
+	color: white;
+}
+
+.a4 {
+	background-color: #59323C;
+}
+
+.a4 a.comment {
+	color: #59323C;
+}
+
+
+{% endblock %}
+
+{% block login %}
+	{{ super() }}
+{% endblock %}
+
+{% block body %}
+
+<!-- The start of the actual body -->
+<div class="container" role="main">
+<!-- Where the user can press to post an article -->
+	<div class="row">
+		<a href="/postArticle" class="btn btn-lg btn-success nounder" id="post">Post an article</a>
+	</div>
+
+	{% for row in rows %}
+	<div class="row">
+		{% for column in row %}
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-6 col-xs-6 bg {{column[0].style}}">
+					<a href="{{column[0].articleURL}}" class="nounder">
+						<img src="/static/brain.png" class="article-icon">
+						<div class="title">{{column[0].title}}</div>
+					</a>
+					<a href="/{{column[0].commentURL}}" class="btn comment">{{column[0].comments}}</a>
+				</div>
+				{% if column[1] %}
+				<div class="col-md-6 col-xs-6 bg {{column[1].style}}">
+					<a href="{{column[1].articleURL}}" class="nounder">
+						<img src="/static/brain.png" class="article-icon">
+						<div class="title">{{column[1].title}}</div>
+					</a>
+					<a href="/{{column[1].commentURL}}" class="btn comment">{{column[1].comments}}</a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endfor %}
+
+
+	
+</div>
+
+<div class="container">
+	<ul id="pages">
+	</ul>	
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+	var options = {
+		// more jinja code based on page number and articles
+		currentPage: {{page}},
+		totalPages: {{totalPages}},
+		bootstrapMajorVersion: 3,
+		pageUrl: function(type, page, current){
+        	return "/page/"+page;
+    	}
+	}
+
+	$('#pages').bootstrapPaginator(options);
+
+</script>
+
+{% endblock %}

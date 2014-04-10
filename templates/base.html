@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>ScienceWatchr</title>
+
+	    <!-- Use bootstrap to style website -->
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+		<!-- This is where all the style is located, along with bootstrap -->
+		<style type="text/css">
+			{% block style %}
+			{% endblock %}
+
+			.dropdown-menu {
+				min-width: 250px;
+			}
+
+			.form-control {
+				margin-bottom: 5px;
+			}
+
+			body {
+				background-color: rgb(43,43,43);
+			}
+
+			.navbar {
+				background-color: #BFAF80;
+				border: 1px solid rgb(43,43,43);
+			}
+
+			.navbar-default .navbar-brand {
+				color: rgb(43,43,43);
+			}
+
+			.navbar-default .navbar-nav>li>a {
+				color: rgb(43,43,43);
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- Boilerplate code to get the navbar at the top to work -->
+		<!-- Navbar -->
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+      			<div class="navbar-header">
+	            	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            		<span class="sr-only">Toggle navigation</span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	          		</button>
+	          		<!-- About page for website -->
+	          		<a class="navbar-brand" href="/">ScienceWatchr</a>
+        		</div>
+        		<!-- the important parts at the top of the navbar -->
+        		<div class="navbar-collapse collapse">
+		          <ul class="nav navbar-nav">
+		            <!-- Special Jinja code for using python variables in html -->
+		            {% if session.logged_in %}
+		            {% if uname %}
+		            <li><a href="/profiles/{{uname}}">{{uname}}</a></li>
+		            {% endif %}
+		            {% endif %}
+		          </ul>
+
+		          <ul class="nav navbar-nav navbar-right">
+		          	{% if not session.logged_in %}
+        			  <li>
+        			  	<a href="/register">Register</a>
+        			  </li>
+        			  <!-- The start of login form -->
+        			  {% block login %}
+			          <li class="dropdown">
+            			<a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In</a>
+            			<div class="dropdown-menu" style="padding: 10px">
+              				<!-- Login form here -->
+              				<form name="login" class="form-signin" method="post" role="form">
+		           				<input type="text" name="user" class="form-control" placeholder="Username">
+		            			<input type="password" name="pwd" class="form-control" placeholder="Password">
+		            			<input class="btn btn-sm btn-info" type="submit" value="Sign In" style="width: 100%">
+		            		</form>
+            			</div>
+          			  </li>
+          			  {% endblock %}
+          			{% else %}
+          			  <li><a href="/logout">Log Out</a></li>
+        			{% endif %}
+        		  </ul>
+		          
+		        </div>
+        	</div>
+		</div>
+		<!-- End navbar -->
+
+		{% block body %}
+
+		{% endblock %}
+
+		<!-- Required javascript files for functional website -->
+		<script src="/static/js/jquery-1.11.0.min.js"></script>
+
+		<script src="/static/js/bootstrap.min.js"></script>
+
+		<script src="/static/js/bootstrap-paginator.min.js"></script>
+
+		<script type="text/javascript">
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					alert({{messages}});
+				{% endif %}
+			{% endwith %}
+		</script>
+
+		{% block script %}{% endblock %}
+	</body>
+</html>

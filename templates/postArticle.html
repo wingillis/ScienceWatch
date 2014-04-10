@@ -1,123 +1,53 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
+{% block style %}
+.dropdown-menu { 
+	min-width: 250px;
+}
 
-<html>
-	<head>
-		<title>Post Article</title>
-		<meta charset="utf-8">
+.form-control {
+	margin-bottom: 5px;
+}
+.form-signin {
+	margin: 10px;
+}
+#login {
+	margin-bottom: 0px;
+	border: none;
 
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
+}
+{% endblock %}
 
-	    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+{% block login %}
+	{{ super() }}
+{% endblock %}
 
-	    <style type="text/css">
+{% block body %}
 
-			.dropdown-menu { 
-				min-width: 250px;
-			}
-
-			.form-control {
-				margin-bottom: 5px;
-			}
-			.form-signin {
-				margin: 10px;
-			}
-			#login {
-				margin-bottom: 0px;
-				border: none;
-
-			}
-
-	    </style>
-
-	</head>
-
-	<body>
-		<!-- The menu bar at the top -->
-		<div class="navbar navbar-default navbar-static-top" role="navigation">
-			<div class="container">
-      			<div class="navbar-header">
-	            	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	            		<span class="sr-only">Toggle navigation</span>
-	            		<span class="icon-bar"></span>
-	            		<span class="icon-bar"></span>
-	            		<span class="icon-bar"></span>
-	          		</button>
-	          		<a class="navbar-brand" href="#">ScienceWatchr</a>
-        		</div>
-
-        		<div class="navbar-collapse collapse">
-		          <ul class="nav navbar-nav">
-		            <li><a href="/">Home</a></li>
-		            <li><a href="#">About this Project</a></li>
-		            <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories<b class="caret"></b></a>
-		              <ul class="dropdown-menu">
-		                <li><a href="#">Neuroscience</a></li>
-		                <li class="divider"></li>
-		                <li><a href="#">Computer Science</a></li>
-		                <li class="divider"></li>
-		                <li><a href="#">Systems</a></li>
-		                <!-- <li class="dropdown-header">Nav header</li> -->
-		              </ul>
-		            </li>
-		            {%if signedIn %}
-		            <li><a>Hello, {{uname}}</a></li>
-		            {% endif %}
-		            {% with messages = get_flashed_messages() %}
-					  {% if messages %}
-					      <li class="alert alert-danger" id="login">{{ messages[0] }}</li>
-					  {% endif %}
-					{% endwith %}
-		          </ul>
-		          <ul class="nav navbar-nav navbar-right">
-        			  <li>
-        			  	<a href="/register">Register</a>
-
-        			  </li>
-        			  <!-- The sign in form -->
-			          <li class="dropdown">
-            			<a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In</a>
-            			<div class="dropdown-menu" style="padding: 10px">
-              				<!-- Login form here -->
-              				<form name="login" class="form-signin" method="post" role="form">
-		           				<input type="text" name="user" class="form-control" placeholder="Username">
-		            			<input type="password" name="pwd" class="form-control" placeholder="Password">
-		            			<input class="btn btn-sm btn-info" type="submit" value="Sign In" style="width: 100%">
-		            		</form>
-            			</div>
-          			</li>
-          			<li><a href="/logout">Log Out</a></li>
-        		  </ul>
-		          
-		        </div>
-        	</div>
-		</div>
-
-		{% if signedIn %}
-		<div class="container">
-			<div class="row">
-			<div class="col-md-6">
+{% if session.logged_in %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
 			<form name="article" class="form-signin" method="post" role="form">
 				<h3>Put the  title and link to the article here (preferably a link to the full article): </h3><br>
 				<input type="text" name="title" class="form-control" placeholder="title: limit 50 characters" maxlength="50" required>
 				<input type="text" name="artUrl" class="form-control" placeholder="url" required>
+				<select name="tag">
+					<option value="neuroscience">Neuroscience</option>
+					<option value="biology">Biology</option>
+					<option value="systems-dynamics">Systems Dynamics</option>
+					<option value="science">Science</option>
+				</select>
 				<input type="submit" class="btn btn-success" value="Post article">
 			</form>
-			</div>
-			</div>
 		</div>
-		{% else %}
+	</div>
+</div>
 
-		<h1>Please sign in to post an article</h1>
+{% else %}
 
-		{% endif %}
+<h1>Please sign in to post an article</h1>
 
-		<script src="/static/js/jquery-1.11.0.min.js"></script>
+{% endif %}
 
-		<script src="/static/js/bootstrap.min.js"></script>
-
-	</body>
-
-</html>
+{% endblock %}
