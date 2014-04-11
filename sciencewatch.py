@@ -119,6 +119,7 @@ def register():
 			db.execute('select (id) from users where username=%s', (user,))	
 			uuid = db.getOne()[0]
 			session['uuid'] = uuid
+			session['logged_in'] = True
 			return redirect('/page/1')
 		else:
 			flash('Username probably taken, try another')
@@ -137,7 +138,7 @@ def postArticle():
 			user = signIn(request)
 			return redirect('/postArticle')
 		elif 'artUrl' in request.form:
-			c = generateURL()
+			c = utilities.generateURL()
 			u = db.getUsername(session['uuid'])
 			args = (session['uuid'], u, request.form['artUrl'], time.time(), c,
 				request.form['title'], request.form['tag'])

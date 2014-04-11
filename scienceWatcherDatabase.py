@@ -14,18 +14,18 @@ class Database:
 	def __init__(self):
 
 		# get connection and cursor for use from the whole class
-		# self.connection = psycopg2.connect('dbname=sciencewatch\
-		# 	user=wgillis')
+		self.connection = psycopg2.connect('dbname=sciencewatch\
+			user=wgillis')
 
 		# code for after development
-		urlparse.uses_netloc.append("postgres")
-		url = urlparse.urlparse(os.environ["DATABASE_URL"])
-		self.connection = psycopg2.connect(
-			    database=url.path[1:],
-			    user=url.username,
-		    	password=url.password,
-		    	host=url.hostname,
-		    	port=url.port)
+		# urlparse.uses_netloc.append("postgres")
+		# url = urlparse.urlparse(os.environ["DATABASE_URL"])
+		# self.connection = psycopg2.connect(
+		# 	    database=url.path[1:],
+		# 	    user=url.username,
+		#     	password=url.password,
+		#     	host=url.hostname,
+		#     	port=url.port)
 		self.cursor = self.connection.cursor()
 
 
@@ -108,6 +108,7 @@ class Database:
 		# SQL code for adding comment
 		try:
 			self.execute('insert into comments (commenturl, comment, username, time) values (%s,%s,%s,%s)', args)
+			self.execute('update articles set commentnum = commentnum + 1 where comments=%s', (args[0],))
 			self.save()
 			return True
 
