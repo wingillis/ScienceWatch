@@ -69,25 +69,22 @@ def index(number=0):
 		# if there are less than 12 articles to display
 		content = content[accessContent:accessContent+12]
 		# prepare the data structure for holding the data being passed into the html
-		rows = []
+		rows = [[] for i in range(4)]
 		# k will at max be 12
 		k = len(content)
 
 		# for the html layout, I need to double-up all the content data, so this
 		# will give me up to six entries in the list
-		data = [(content[i],content[i+1] if i+1<k else None) for i in range(0,k,2)]
+		data = [utilities.Article(content[i]+ (i%5,)) for i in range(0,k)]
 
 		# k will now be at max 6
 		k = len(data)
 
 		# create the data structure to be passed to the html
-		for i in range(3):
-			rows.append([])
-			for j in range(2):
-				if(i*2+j)< k:
-					rows[i].append((utilities.Article(data[i*2+j][0]),
-									utilities.Article(data[i*2+j][1])
-									if data[i*2+j][1] else None))
+		for index, row in enumerate(rows):
+			articles = data[index * 3: (index * 3) + 3]
+			for article in articles:
+				rows[index].append(article)
 
 		# set up username variable to display the user's name 
 		uname = ''

@@ -38,7 +38,7 @@ class Article:
 		self.commentURL = args[1]
 		# self.tag = getTag(args[3])
 		self.comments = processCommentNum(args[4])
-		self.style = selectStyle()
+		self.style = ['a1','a2','a3','a4','a5'][args[5]]
 
 class Comment:
 	def __init__(self, args):
