@@ -135,4 +135,9 @@ class Database:
 		# Add SQL for getting all of the favorites of the user
 		pass
 
+	def getArticlesWithTag(self, tag):
+		# Get every article, process the tags to see if tag is present
+		# and return a list of tuples where such is present
+		pass
+
 # End unfinished region

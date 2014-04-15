@@ -62,7 +62,7 @@
 			}
 
 			.login {
-				background-color: #675d40;
+				background-color: #363021;
 				border: 0px;
 			}
 
@@ -118,12 +118,12 @@
 		          <ul class="nav navbar-nav navbar-right">
 		          	{% if not session.logged_in %}
         			  <li>
-        			  	<a href="/register" style="padding-right: 3px;">REGISTER</a>
+        			  	<a href="/register">REGISTER</a>
         			  </li>
         			  <!-- The start of login form --> 
         			  {% block login %}
 			          <li class="dropdown">
-            			<a style="padding-left:3px; border-left: 2px solid" class="dropdown-toggle" href="#" data-toggle="dropdown">LOGIN</a>
+            			<a class="dropdown-toggle" href="#" data-toggle="dropdown">LOGIN</a>
             			<div class="dropdown-menu login-form">
               				<!-- Login form here -->
               				<form name="login" class="form-signin" method="post" role="form">
