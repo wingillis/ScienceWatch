@@ -47,7 +47,7 @@ within the html file -->
 }
 
 #post:hover {
-	background-color: #675d40;
+	background-color: #363021;
 }
 
 .bg {
@@ -115,7 +115,13 @@ within the html file -->
 	background-color: #bf9080;
 }
 
+.tag:hover {
+	color: rgba(0,0,0,0.5);
+}
 
+.tag {
+	color: rgba(0,0,0,0.4);
+}
 
 
 {% endblock %}
@@ -145,6 +151,10 @@ within the html file -->
 					<a href="{{article.articleURL}}" class="nounder">
 						<div class="title"><b>{{article.title}}</b></div>
 					</a>
+					<img src="/static/icon_tag.png">
+					{% for tag in article.tag %}
+						<a href="#" class="nounder tag"><b>{{tag}},</b></a>
+					{% endfor %}
 					<a href="/{{article.commentURL}}" class="btn comment">{{article.comments}}</a>
 				</div>
 			</div>

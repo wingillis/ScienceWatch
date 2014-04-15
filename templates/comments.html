@@ -4,17 +4,82 @@
 	{{ super() }}
 {% endblock %}
 
+{% block style %}
+.title {
+	color: #363021;
+}
+
+.title:hover {
+	color: #363021;
+}
+
+.nounder {
+	text-decoration: none;
+}
+
+.nounder:hover {
+	text-decoration: none;
+}
+
+.button {
+	background-color: #363021;
+	border: 0px;
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.button:hover {
+	background-color: #363021;
+}
+
+.panel-default .panel-heading {
+	background-color: #675d40;
+	color: black;
+	border-bottom: 1px solid #363021;
+
+}
+
+.panel-default {
+	background-color: #afbf80;
+	color: black;
+	border: 1px solid #363021;
+}
+
+.a1 {
+	background-color: #bfaf80;
+}
+
+
+
+.a2 {
+	background-color: #bfa080;
+}
+
+
+
+.a3 {
+	background-color: #bfbf80;
+}
+
+
+
+.a4 {
+	background-color: #bf9080;
+}
+
+{% endblock %}
+
 {% block body %}
 <div class="container">
 	<div class="page-header">
-		<a href="{{url}}"><h1>{{title}}</h1></a>
+		<a href="{{url}}" class="title nounder"><h1>{{title}}</h1></a>
 	</div>
 
 	{% if session.logged_in %}
 	
 	<form id="form" name="comment" method="post">
 			<textarea class="form-control" rows="3" name="comment"></textarea>
-			<input class="btn btn-success" type="submit" value="Submit Comment">
+			<input class="btn btn-success button" type="submit" value="Submit Comment">
 	</form>
 
 	{% else %}
@@ -30,7 +95,7 @@
 		<div class="panel-heading">
 		    <h3 class="panel-title">{{comment.user}}</h3>
 		</div>
-		<div class="panel-body">
+		<div class="panel-body {{comment.style}}">
 		    {{comment.text}}
 		</div>
 		

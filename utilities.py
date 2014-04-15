@@ -36,7 +36,7 @@ class Article:
 		self.articleURL = args[0]
 		self.title = args[2]
 		self.commentURL = args[1]
-		# self.tag = getTag(args[3])
+		self.tag = args[3].split(',')
 		self.comments = processCommentNum(args[4])
 		self.style = ['a1','a2','a3','a4','a5'][args[5]]
 
@@ -44,3 +44,4 @@ class Comment:
 	def __init__(self, args):
 		self.user = args[0]
 		self.text = args[1]
+		self.style = ['a1','a2','a3','a4','a5'][args[2]]

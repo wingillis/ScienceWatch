@@ -181,7 +181,7 @@ def comment(commenturl):
 			articleurl = data[0]
 			name = ''
 			comms = db.getComments(commenturl)
-			struct = [utilities.Comment((com[1],com[0])) for com in comms]
+			struct = [utilities.Comment((com[1],com[0], index)) for index, com in enumerate(comms)]
 			if 'uuid' in session:
 				name = db.getUsername(session['uuid'])
 			return render_template('comments.html', title=title, url=articleurl, comments=struct, uname=name)

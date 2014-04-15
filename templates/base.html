@@ -50,8 +50,35 @@
 				color: white;
 			}
 
+
+			.black {
+				color: black;
+			}
+
+
+
 			.larger {
 				font-size: 21px;
+			}
+
+			.login {
+				background-color: #675d40;
+				border: 0px;
+			}
+
+			.wb:hover {
+				-webkit-filter: invert(100%);
+			}
+
+			.login:hover {
+				background-color: #363021;
+
+			}
+
+			.login-form {
+				background-color: #73694b;
+				padding: 10px;
+				border: 1px solid #363021;
 			}
 		</style>
 	</head>
@@ -59,7 +86,7 @@
 	<body>
 		<!-- Boilerplate code to get the navbar at the top to work -->
 		<!-- Navbar -->
-		<div class="navbar navbar-default navbar-static-top" role="navigation">
+		<div class="navbar navbar-default navbar-static-top" role="navigation" style="padding-top: 3px; padding-bottom: 3px">
 			<div class="navbar-inner">
 				<a class="navbar-brand" href="" style="margin:0px; margin-right:4px; padding:0px"><img src="/static/icon_eye.png"></a>
 
@@ -75,7 +102,7 @@
 	          		</button>
 	          		<!-- About page for website -->
 
-	          		<a class="navbar-brand" href="/"><span class="white">SCIENCE</span><span class="larger">W</span>ATCHR</a>
+	          		<a class="navbar-brand wb" href="/"><span class="white">SCIENCE</span><span class="black"><span class="larger">W</span>ATCHR</span></a>
         		</div>
         		<!-- the important parts at the top of the navbar -->
         		<div class="navbar-collapse collapse">
@@ -91,18 +118,18 @@
 		          <ul class="nav navbar-nav navbar-right">
 		          	{% if not session.logged_in %}
         			  <li>
-        			  	<a href="/register" style="padding-right: 3px">REGISTER</a>
+        			  	<a href="/register" style="padding-right: 3px;">REGISTER</a>
         			  </li>
         			  <!-- The start of login form --> 
         			  {% block login %}
 			          <li class="dropdown">
-            			<a style="padding-left:0px" class="dropdown-toggle" href="#" data-toggle="dropdown">| LOGIN</a>
-            			<div class="dropdown-menu" style="padding: 10px">
+            			<a style="padding-left:3px; border-left: 2px solid" class="dropdown-toggle" href="#" data-toggle="dropdown">LOGIN</a>
+            			<div class="dropdown-menu login-form">
               				<!-- Login form here -->
               				<form name="login" class="form-signin" method="post" role="form">
 		           				<input type="text" name="user" class="form-control" placeholder="Username">
 		            			<input type="password" name="pwd" class="form-control" placeholder="Password">
-		            			<input class="btn btn-sm btn-info" type="submit" value="Sign In" style="width: 100%">
+		            			<input class="btn btn-sm btn-info login" type="submit" value="Sign In" style="width: 100%">
 		            		</form>
             			</div>
           			  </li>

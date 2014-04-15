@@ -9,12 +9,28 @@
 	margin-bottom: 5px;
 }
 .form-signin {
+	padding: 5px;
 	margin: 10px;
+	border: 2px solid #363021;
+	border-radius: 10px;
 }
 #login {
 	margin-bottom: 0px;
 	border: none;
 
+}
+
+h1 {
+	color: black;
+}
+
+h3 {
+	color: black;
+}
+
+#logbutton {
+	width: 100%;
+	font-size: 16px;
 }
 {% endblock %}
 
@@ -32,13 +48,8 @@
 				<h3>Put the  title and link to the article here (preferably a link to the full article): </h3><br>
 				<input type="text" name="title" class="form-control" placeholder="title: limit 50 characters" maxlength="50" required>
 				<input type="text" name="artUrl" class="form-control" placeholder="url" required>
-				<select name="tag">
-					<option value="neuroscience">Neuroscience</option>
-					<option value="biology">Biology</option>
-					<option value="systems-dynamics">Systems Dynamics</option>
-					<option value="science">Science</option>
-				</select>
-				<input type="submit" class="btn btn-success" value="Post article">
+				<input type="text" name="tag" class="form-control" placeholder="tags (separate tags with comma)" required>
+				<input type="submit" class="btn btn-success login" id="logbutton" value="Post article">
 			</form>
 		</div>
 	</div>
