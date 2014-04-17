@@ -250,10 +250,15 @@ def tagPage(tag=None):
 			rows = [[] for i in range(4)]
 		# k will at max be 12
 		
+		uuid = ''
+		uname = ''
+		if 'uuid' in session:
+			uuid = session['uuid']
+			uname = db.getUsername(uuid)
 
-		
-		data = [utilities.Article(content[i]+ (i%5,)) for i in range(k)]
-
+			data = [utilities.Article(article + (index%5, db.checkFavorites(uuid, article[0]))) for index, article in enumerate(content)]
+		else:
+			data = [utilities.Article(article + (index%5, False)) for index, article in enumerate(content)]
 		# create the data structure to be passed to the html
 		# for index, row in enumerate(rows):
 		# 	articles = data[index * int(k/3): (index * int(k/3)) + math.ceil(k/3)]
@@ -263,11 +268,7 @@ def tagPage(tag=None):
 		for index, datum in enumerate(data):
 			rows[index%4].append(datum)
 
-		uuid = ''
-		uname = ''
-		if 'uuid' in session:
-			uuid = session['uuid']
-			uname = db.getUsername(uuid)
+		
 
 		return render_template('articles.html', uname = uname, rows = rows, page = 1, totalPages = 1, uuid = uuid)
 
