@@ -121,19 +121,40 @@ class Database:
 		self.execute('select comment, username from comments where commenturl=%s order by time desc', (url,))
 		return self.getall()
 
-# Unfinished region
-	def addFavorite(self, uname, articeUrl):
+	def addFavorite(self, uid, articleUrl):
 		# Add SQL code for adding a link to the favorites table
-		pass
+		username = self.getUsername(uid)
 
-	def removeFavorite(self, uname, articleUrl):
+		self.execute('select comments, title from articles where articleurl=%s', (articleUrl,))
+		data = self.getOne()
+
+		self.execute('insert into favorites values (%s,%s,%s,%s,%s)', (uid, username, articleUrl, data[0], data[1]))
+		self.save()
+		return True
+
+
+	def removeFavorite(self, uid, articleUrl):
 		# Add SQL for removing link from favorites table
-		# First check if link in favorites
-		pass
+
+		self.execute('delete from favorites where id=%s and articleurl=%s', (uid, articleUrl))
+		self.save()
+		return True
+
+	def checkFavorites(self, uid, articleUrl):
+		self.execute('select articleurl from favorites where id=%s', (uid,))
+
+		data = self.getall()
+
+		if (articleUrl,) in data:
+			return True
+		else:
+			return False
 
 	def getUserPage(self, uid):
 		# Add SQL for getting all of the favorites of the user
-		pass
+		self.execute('select * from favorites where id=%s', (uid,))
+		data = self.getall()
+		return data
 
 	def getArticlesWithTag(self, tag):
 		# Get every article, process the tags to see if tag is present
@@ -144,4 +165,3 @@ class Database:
 
 
 
-# End unfinished region

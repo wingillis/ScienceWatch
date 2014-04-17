@@ -5,7 +5,7 @@
 # it contains all the handling for webpages, redirection, etc
 
 # Web framework import
-from flask import Flask, redirect, request, session, flash, render_template
+from flask import Flask, redirect, request, session, flash, render_template, make_response
 # Necessary libraries import
 import time, math
 # Import secret key to make user session secure
@@ -41,12 +41,25 @@ def home():
 @app.route('/page/<number>', methods=['GET','POST'])
 def index(number=0):
 	# If the form request is a post method and not a get, sign the user in
-	if request.method == 'POST':	
-		user = signIn(request)
-		if number:
-			return redirect('/page/%s' % number)
-		else:
-			return redirect('/page/1')
+	if request.method == 'POST':
+		if 'pwd' in request.form:
+			user = signIn(request)
+			if number:
+				return redirect('/page/%s' % number)
+			else:
+				return redirect('/page/1')
+		elif 'fav' in request.form:
+			user = session['uuid']
+			artURL = request.form['fav']
+			isFav = db.checkFavorites(user, artURL)
+			if isFav:
+				db.removeFavorite(user, artURL)
+				return make_response('No')
+			else:
+				db.addFavorite(user, artURL)
+				return make_response('Yes')
+
+		return make_response('It didn\'t work')
 
 	# this is for every other time the user accesses this page
 	else:
@@ -75,22 +88,25 @@ def index(number=0):
 			rows = [[] for i in range(k)]
 		else:
 			rows = [[] for i in range(4)]
+		
+		uuid = ''
+		uname = ''
+		if 'uuid' in session:
+			uuid = session['uuid']
+			uname = db.getUsername(uuid)
 
-		# for the html layout, I need to double-up all the content data, so this
-		# will give me up to six entries in the list
-		data = [utilities.Article(content[i]+ (i%5,)) for i in range(0,k)]
-
+			data = [utilities.Article(article + (index%5, db.checkFavorites(uuid, article[0]))) for index, article in enumerate(content)]
+		else:
+			data = [utilities.Article(article + (index%5, False)) for index, article in enumerate(content)]
 
 		# create the data structure to be passed to the html
 		for index, datum in enumerate(data):
 			rows[index%4].append(datum)
 
 		# set up username variable to display the user's name 
-		uname = ''
-		if 'uuid' in session:
-			uname = db.getUsername(session['uuid'])
+		
 
-		return render_template('articles.html', uname = uname, rows=rows, page=num, totalPages=maxPages)
+		return render_template('articles.html', uname = uname, rows=rows, page=num, totalPages=maxPages, uuid = uuid)
 
 #################################################################################
 
@@ -192,9 +208,25 @@ def comment(commenturl):
 
 # show the user's profile and all the posts and comments s/he made
 # OR show all the favorites that the user has saved
-@app.route('/profiles/<uname>')
-def profile(uname=None):
-	return ''
+@app.route('/profiles/<uid>')
+def profile(uid=None):
+	if uid:
+		try:
+			uuid = ''
+			uname = ''
+			if 'uuid' in session:
+				uuid = session['uuid']
+				uname = db.getUsername(uuid)
+			int(uid)
+			favorites = db.getUserPage(uid)
+			data = [utilities.Favorite(fav + (index%5,)) for index, fav in enumerate(favorites)]
+			return render_template('favorites.html', uname = uname, uuid = uuid, favorites = data, profile = db.getUsername(uid))
+		except:
+			return 'Please use person\'s id that exists'
+		
+
+	else:
+		return 'Page doesn\'t exist'
 
 #################################################################################
 
@@ -231,12 +263,13 @@ def tagPage(tag=None):
 		for index, datum in enumerate(data):
 			rows[index%4].append(datum)
 
-
+		uuid = ''
 		uname = ''
 		if 'uuid' in session:
-			uname = db.getUsername(session['uuid'])
+			uuid = session['uuid']
+			uname = db.getUsername(uuid)
 
-		return render_template('articles.html', uname = uname, rows = rows, page = 1, totalPages = 1)
+		return render_template('articles.html', uname = uname, rows = rows, page = 1, totalPages = 1, uuid = uuid)
 
 
 

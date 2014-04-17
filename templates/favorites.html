@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block style %}
+
+.pagination .active a {
+	background-color: #2b2b2b;
+	border: 1px solid rgb(60,60,60);
+}
+
+.pagination .active a:hover {
+	background-color: #2b2b2b;
+	border: 1px solid rgb(60,60,60);
+
+}
+
+.pagination li a {
+	color: #2b2b2b;
+	border: 1px solid rgb(60,60,60);
+	background-color: #BFAF80;
+}
+
+.pagination li a:hover {
+	color: white;
+	border: 1px solid rgb(60,60,60);
+	background-color: #2b2b2b;
+
+}
+
+.article-icon {
+	margin-right: 5px;
+	padding-bottom: 2px;
+	height: 100%;
+}
+
+#post {
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 100%;
+	border: 0px solid;
+	background-color: #675d40;
+	border-radius: 10px;
+	color: white;
+	font-size: 36px;
+	padding: 2px;
+	box-shadow: 3px 3px 1px #333333;
+}
+
+#post:hover {
+	background-color: #363021;
+}
+
+.bg {
+	padding: 10px;
+	background-color: #afbf80;
+	border-radius: 10px;
+	margin-bottom: 8px;
+	margin-right: 8px;
+	box-shadow: 4px 4px 1px #333333;
+}
+
+.bg a.comment {
+	color: #333333;
+}
+
+
+.comment {
+	width: 88%;
+	margin-top: 5px;
+	background-color: rgba(0,0,0,0.1);
+	border: 0px solid black;
+	border-radius: 20px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.comment:hover {
+	background-color: rgba(0,0,0,0.2);
+	color: white;
+}
+
+.title {
+	color: black;
+	font-size: 13px;
+	font-style: bold;
+	margin-bottom:20px;
+}
+
+.nounder {
+	text-decoration: none;
+}
+
+.nounder:hover {
+	text-decoration: none;
+}
+
+.a1 {
+	background-color: #bfaf80;
+}
+
+.a2 {
+	background-color: #bfa080;
+}
+
+
+.a3 {
+	background-color: #bfbf80;
+}
+
+
+.a4 {
+	background-color: #bf9080;
+}
+
+
+{% endblock %}
+
+{% block login %}
+	{{ super() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" role="main">
+<!-- Where the user can press to post an article -->
+	<h2>{{profile}}'s Favorites</h2>
+	{% for article in favorites %}
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="bg {{article.style}}">
+				<div style="float:left" class="article-icon">
+					<img src="/static/icon_doc.png">
+				</div>
+				<a href="{{article.articleURL}}" class="nounder">
+					<div class="title"><b>{{article.title}}</b></div>
+				</a>
+				<a href="/{{article.commentURL}}" class="btn comment">Comment</a>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+	
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+
+{% endblock %}

@@ -124,6 +124,9 @@ within the html file -->
 	color: rgba(0,0,0,0.4);
 }
 
+.glyphicon-star {
+	font-size: 19px;
+}
 
 {% endblock %}
 
@@ -157,6 +160,9 @@ within the html file -->
 						<a href="/tag/{{tag}}" class="nounder tag"><b>{{tag}},</b></a>
 					{% endfor %}
 					<a href="/{{article.commentURL}}" class="btn comment">{{article.comments}}</a>
+					{% if session.logged_in %}
+					<a href="#" onClick="favorite('{{article.articleURL}}', '{{article.commentURL}}')"><span class="glyphicon glyphicon-star" id="{{article.commentURL}}" style="color:{{article.favorite}}"></span></a> <b>Favorite</b>
+					{% endif %}
 				</div>
 			</div>
 			{% endfor %}
@@ -192,6 +198,27 @@ within the html file -->
 	}
 
 	$('#pages').bootstrapPaginator(options);
+
+	function favorite(artname, idn) {
+		$.ajax({
+             type: "POST",
+             url: "/page/1",
+             data: {'fav': artname},
+             success: function(msg) {
+             	if (msg == "Yes")
+             	{
+             		$('#' + idn).css('color', 'rgba(255,255,255,0.75)');
+             	}
+             	else if (msg == "No")
+             	{
+             		$('#' + idn).css('color', 'rgba(0,0,0,0.2)');
+             	}
+             	else {
+             		alert(msg);
+             	}
+             }
+          });
+	}
 
 </script>
 

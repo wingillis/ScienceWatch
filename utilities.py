@@ -39,9 +39,22 @@ class Article:
 		self.tag = args[3].split(',')
 		self.comments = processCommentNum(args[4])
 		self.style = ['a1','a2','a3','a4','a5'][args[5]]
+		self.favorite = 'rgba(255,255,255,0.75)' if args[6] else 'rgba(0,0,0,0.2)'
 
 class Comment:
 	def __init__(self, args):
 		self.user = args[0]
 		self.text = args[1]
 		self.style = ['a1','a2','a3','a4','a5'][args[2]]
+
+
+class Favorite:
+	def __init__(self, args):
+		self.articleURL = args[2]
+		self.commentURL = args[3]
+		self.title = args[4]
+		self.style = ['a1','a2','a3','a4','a5'][args[5]]
+
+
+
+		
