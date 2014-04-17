@@ -154,7 +154,7 @@ within the html file -->
 					</a>
 					<img src="/static/icon_tag.png">
 					{% for tag in article.tag %}
-						<a href="#" class="nounder tag"><b>{{tag}},</b></a>
+						<a href="/tag/{{tag}}" class="nounder tag"><b>{{tag}},</b></a>
 					{% endfor %}
 					<a href="/{{article.commentURL}}" class="btn comment">{{article.comments}}</a>
 				</div>

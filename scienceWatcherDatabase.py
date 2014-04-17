@@ -138,6 +138,10 @@ class Database:
 	def getArticlesWithTag(self, tag):
 		# Get every article, process the tags to see if tag is present
 		# and return a list of tuples where such is present
-		pass
+		arts = self.getArticles()
+		data = [art for art in arts if tag in art[3]]
+		return data
+
+
 
 # End unfinished region

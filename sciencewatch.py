@@ -69,22 +69,21 @@ def index(number=0):
 		# if there are less than 12 articles to display
 		content = content[accessContent:accessContent+12]
 		# prepare the data structure for holding the data being passed into the html
-		rows = [[] for i in range(4)]
-		# k will at max be 12
 		k = len(content)
+
+		if k < 4:
+			rows = [[] for i in range(k)]
+		else:
+			rows = [[] for i in range(4)]
 
 		# for the html layout, I need to double-up all the content data, so this
 		# will give me up to six entries in the list
 		data = [utilities.Article(content[i]+ (i%5,)) for i in range(0,k)]
 
-		# k will now be at max 6
-		k = len(data)
 
 		# create the data structure to be passed to the html
-		for index, row in enumerate(rows):
-			articles = data[index * 3: (index * 3) + 3]
-			for article in articles:
-				rows[index].append(article)
+		for index, datum in enumerate(data):
+			rows[index%4].append(datum)
 
 		# set up username variable to display the user's name 
 		uname = ''
@@ -196,6 +195,50 @@ def comment(commenturl):
 @app.route('/profiles/<uname>')
 def profile(uname=None):
 	return ''
+
+#################################################################################
+
+@app.route('/tag/<tag>', methods=['GET', 'POST'])
+def tagPage(tag=None):
+	if request.method == 'POST':	
+		user = signIn(request)
+		return redirect('/tag/{0}'.format(tag))
+	if tag:
+		content = db.getArticlesWithTag(tag)
+
+		
+		# only get the 12 relevant articles for display, or whatever is left
+		# if there are less than 12 articles to display
+		# prepare the data structure for holding the data being passed into the html
+		k = len(content)
+
+		if k < 4:
+			rows = [[] for i in range(k)]
+		else:
+			rows = [[] for i in range(4)]
+		# k will at max be 12
+		
+
+		
+		data = [utilities.Article(content[i]+ (i%5,)) for i in range(k)]
+
+		# create the data structure to be passed to the html
+		# for index, row in enumerate(rows):
+		# 	articles = data[index * int(k/3): (index * int(k/3)) + math.ceil(k/3)]
+		# 	for article in articles:
+		# 		rows[index].append(article)
+
+		for index, datum in enumerate(data):
+			rows[index%4].append(datum)
+
+
+		uname = ''
+		if 'uuid' in session:
+			uname = db.getUsername(session['uuid'])
+
+		return render_template('articles.html', uname = uname, rows = rows, page = 1, totalPages = 1)
+
+
 
 #################################################################################
 def signIn(r):
