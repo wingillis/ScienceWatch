@@ -287,7 +287,11 @@ def signIn(r):
 	user = r.form['user']
 	# Get password from the signin form
 	pwd = r.form['pwd']
+	# Check the database to see if user is in it
 	login = db.checkLogIn(user, pwd)
+
+	# If so, add user to the session cookies
+	# and change the state of the application to 'logged in'
 	if login:
 		session['uuid'] = login
 		session['logged_in'] = True
