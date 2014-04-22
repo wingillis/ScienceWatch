@@ -285,6 +285,7 @@ def tagPage(tag=None):
 def signIn(r):
 	# Get the user from the signin form
 	user = r.form['user']
+	# Get password from the signin form
 	pwd = r.form['pwd']
 	login = db.checkLogIn(user, pwd)
 	if login:
