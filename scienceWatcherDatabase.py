@@ -50,6 +50,12 @@ class Database:
 		'''Returns a list of tuples of information'''
 		return self.cursor.fetchall()
 
+	def getID(self, uname):
+
+		db.execute('select (id) from users where username=%s', (uname,))
+		uid = db.getOne()[0]
+		return uid
+
 	def addUser(self, uname, pwd):
 		'''Returns a boolean return value to determine if a user was
 		created or not'''
@@ -102,7 +108,6 @@ class Database:
 		arts = self.getall()
 		return arts
 
-# Need to add incrementing component to articles table to accurately displays number of comments
 	def addComment(self, args):
 		'''Adds a comment to the database.'''
 

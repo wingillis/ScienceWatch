@@ -158,7 +158,7 @@
 		<script type="text/javascript">
 			{% with messages = get_flashed_messages() %}
 				{% if messages %}
-					alert({{messages}});
+			alert('{{messages[0]}}');
 				{% endif %}
 			{% endwith %}
 		</script>

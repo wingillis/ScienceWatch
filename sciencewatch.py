@@ -128,8 +128,7 @@ def register():
 		pwd = request.form['pwd']
 		status = db.addUser(user, pwd)
 		if status:
-			db.execute('select (id) from users where username=%s', (user,))	
-			uuid = db.getOne()[0]
+			uuid = db.getID(user)
 			session['uuid'] = uuid
 			session['logged_in'] = True
 			return redirect('/page/1')
@@ -208,25 +207,33 @@ def comment(commenturl):
 
 # show the user's profile and all the posts and comments s/he made
 # OR show all the favorites that the user has saved
-@app.route('/profiles/<uid>')
+@app.route('/profiles/<uid>', methods = ['GET', 'POST'])
 def profile(uid=None):
-	if uid:
-		try:
-			uuid = ''
-			uname = ''
-			if 'uuid' in session:
-				uuid = session['uuid']
-				uname = db.getUsername(uuid)
-			int(uid)
-			favorites = db.getUserPage(uid)
-			data = [utilities.Favorite(fav + (index%5,)) for index, fav in enumerate(favorites)]
-			return render_template('favorites.html', uname = uname, uuid = uuid, favorites = data, profile = db.getUsername(uid))
-		except:
-			return 'Please use person\'s id that exists'
-		
+	if request.method == 'POST':
 
-	else:
-		return 'Page doesn\'t exist'
+		if 'user' in request.form:
+
+			user = signIn(request)
+			return redirect('/profiles/%s' % (uid))
+
+	else:	
+		if uid:
+			try:
+				uuid = ''
+				uname = ''
+				if 'uuid' in session:
+					uuid = session['uuid']
+					uname = db.getUsername(uuid)
+				int(uid)
+				favorites = db.getUserPage(uid)
+				data = [utilities.Favorite(fav + (index%5,)) for index, fav in enumerate(favorites)]
+				return render_template('favorites.html', uname = uname, uuid = uuid, favorites = data, profile = db.getUsername(uid))
+			except:
+				return 'Please use person\'s id that exists'
+			
+
+		else:
+			return 'Page doesn\'t exist'
 
 #################################################################################
 
@@ -286,7 +293,7 @@ def signIn(r):
 	else:
 		# Username is not in database, so do something about it
 		# Form a response
-		flash('Invalid login')
+		flash('Username or password not correct')
 		return ''
 
 
